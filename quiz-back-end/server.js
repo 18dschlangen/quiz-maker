@@ -39,9 +39,10 @@ app.get("/api/questions", async (_req, res) => {
 app.post("/api/questions", async (req, res) => {
   console.log(req.body);
   try {
-    await client.query("INSERT INTO questions (title) VALUES ($1);", [
-      req.body.title,
-    ]);
+    await client.query(
+      "INSERT INTO questions (question, answer) VALUES ($1, $2);",
+      [req.body.question, req.body.answer]
+    );
     res.json("success");
   } catch (e) {
     res.send("There was an error");
