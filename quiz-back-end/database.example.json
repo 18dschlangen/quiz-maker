@@ -1,0 +1,12 @@
+{
+  "dev": {
+    "driver": "pg",
+    "user": "postgres",
+    "password": "postgres",
+    "host": "localhost",
+    "database": "quiz-data",
+    "port": "5432",
+    "schema": ""
+  },
+  "sql-file": true
+}
