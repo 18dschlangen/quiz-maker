@@ -1,2 +1,3 @@
 quiz-back-end/node_modules
+.env
 quiz-front-end/node_modules
