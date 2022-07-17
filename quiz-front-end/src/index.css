@@ -11,6 +11,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.btn {
+  text-transform: initial;
+}
+
 h1 {
   @apply text-6xl;
 }
