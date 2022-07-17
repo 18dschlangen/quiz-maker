@@ -1,11 +1,16 @@
 import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import About from "./pages/About";
+import Home from "./pages/Home";
 
 function App() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <button className="btn btn-primary">Click Me Bitch</button>
+    <div className="App">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="about" element={<About />} />
+      </Routes>
     </div>
   );
 }
