@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 // ignore
-import { Route, Routes } from "react-router-dom";
-import "./App.css";
+import { Route, Routes } from 'react-router-dom';
+import './App.css';
 import Navbar from './components/Navbar';
-import About from "./pages/About";
+import About from './pages/About';
 import CreateQuiz from './pages/CreateQuiz';
-import Home from "./pages/Home";
+import Home from './pages/Home';
 import Quizzes from './pages/Quizzes';
 import RandomQuestions from './pages/RandomQuestions';
-
 
 function App() {
   return (
