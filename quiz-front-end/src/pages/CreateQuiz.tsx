@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import AddQuestion from '../components/AddQuestion';
+import React, { useState } from "react";
+import AddQuestion from "../components/AddQuestion";
 export interface Question {
   questionID: number;
   questionInput: string;
@@ -8,14 +8,14 @@ export interface Question {
 }
 export default function CreateQuiz() {
   const [questions, setQuestions] = useState<Question[]>([]);
-  const [quizName, setQuizName] = useState<string>('');
+  const [quizName, setQuizName] = useState<string>("");
   const addQuestion = () => {
     setQuestions([
       ...questions,
       {
         questionID: questions.length,
-        questionInput: '',
-        correctAnswer: '',
+        questionInput: "",
+        correctAnswer: "",
         wrongAnswers: [],
       },
     ]);
@@ -24,6 +24,23 @@ export default function CreateQuiz() {
     setQuestions(
       questions.filter((q) => q.questionID !== questions.length - 1)
     );
+  };
+
+  const publishQuiz = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/api/quizzes", {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify({ quizName, questions }), // body data type must match "Content-Type" header
+      });
+      const data = await response.json();
+      console.log("data :>> ", data);
+    } catch (e) {
+      console.log("e", e);
+    }
   };
 
   return (
@@ -64,9 +81,12 @@ export default function CreateQuiz() {
           <button type="submit" className="btn btn-secondary mt-8">
             Save as Incomplete
           </button>
-          <button type="submit" className="btn btn-success mx-2">
-            Publish
-          </button>
+          <input
+            type="button"
+            value="publish"
+            className="btn btn-success mx-2"
+            onClick={publishQuiz}
+          />
         </form>
       </div>
     </div>

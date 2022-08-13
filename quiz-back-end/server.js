@@ -134,4 +134,34 @@ app.delete("/api/wrong_answers", async (req, res) => {
   }
 });
 
+app.post("/api/quizzes", async (req, res) => {
+  try {
+    const quizNameData = await client.query(
+      "INSERT INTO quizzes (name) VALUES ($1) returning *;",
+      [req.body.quizName]
+    );
+    console.log("quizNameData :>> ", quizNameData.rows);
+    for (let i = 0; i < req.body.questions.length; i++) {
+      const quizQuestionData = await client.query(
+        "INSERT INTO questions (question, answer, quiz_id) VALUES ($1, $2, $3) returning *;",
+        [
+          req.body.questions[i].questionInput,
+          req.body.questions[i].correctAnswer,
+          quizNameData.rows[0].id,
+        ]
+      );
+      for (let j = 0; j < req.body.questions[i].wrongAnswers.length; j++) {
+        await client.query(
+          "INSERT INTO wrong_answers (question_id, answer) VALUES ($1, $2);",
+          [quizQuestionData.rows[0].id, req.body.questions[i].wrongAnswers[j]]
+        );
+      }
+    }
+
+    res.json("success");
+  } catch (e) {
+    res.json({ error: "There was an error: " + e });
+  }
+});
+
 app.listen(4000, () => console.log("listening on port 4000...."));

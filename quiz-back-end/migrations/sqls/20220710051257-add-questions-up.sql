@@ -8,12 +8,23 @@ END;
 $$
 language plpgsql;
 
+CREATE TABLE IF NOT EXISTS quizzes(
+    id SERIAL PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
 CREATE TABLE IF NOT EXISTS questions (
     id SERIAL PRIMARY KEY NOT NULL,
+    quiz_id INTEGER NOT NULL,
     question VARCHAR(255) NOT NULL,
     answer VARCHAR(255) NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT FK_questions_quizzes FOREIGN KEY(quiz_id)
+        REFERENCES quizzes(id)
 );
 
 CREATE TABLE IF NOT EXISTS wrong_answers (
@@ -21,7 +32,10 @@ CREATE TABLE IF NOT EXISTS wrong_answers (
     question_id INTEGER NOT NULL,
     answer VARCHAR(255) NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT FK_wrong_answers_questions FOREIGN KEY(question_id)
+        REFERENCES questions(id)
 );
 
 CREATE TRIGGER set_timestamp

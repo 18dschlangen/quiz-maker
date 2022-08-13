@@ -1,5 +1,5 @@
-import React from 'react';
-import { Question } from '../pages/CreateQuiz';
+import React from "react";
+import { Question } from "../pages/CreateQuiz";
 interface AddQuestionProps {
   question: Question;
   setQuestions: React.Dispatch<React.SetStateAction<Question[]>>;
@@ -30,7 +30,7 @@ export default function AddQuestion(props: AddQuestionProps) {
       );
     }
 
-    if (answers !== undefined) {
+    if (answers !== undefined && answers.length < 5) {
       setQuestions((prev) =>
         prev.map((quest) => {
           if (quest.questionID === index) {
@@ -68,7 +68,7 @@ export default function AddQuestion(props: AddQuestionProps) {
         value="Add Wrong Answer"
         className="btn btn-primary mx-2"
         onClick={() =>
-          modifyQuestion({ answers: [...question.wrongAnswers, ''] })
+          modifyQuestion({ answers: [...question.wrongAnswers, ""] })
         }
       />
       <input
