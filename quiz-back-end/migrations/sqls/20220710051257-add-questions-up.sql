@@ -10,7 +10,7 @@ language plpgsql;
 
 CREATE TABLE IF NOT EXISTS quizzes(
     id SERIAL PRIMARY KEY NOT NULL,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) UNIQUE NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS questions (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
     CONSTRAINT FK_questions_quizzes FOREIGN KEY(quiz_id)
-        REFERENCES quizzes(id)
+        REFERENCES quizzes(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS wrong_answers (
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS wrong_answers (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
     CONSTRAINT FK_wrong_answers_questions FOREIGN KEY(question_id)
-        REFERENCES questions(id)
+        REFERENCES questions(id) ON DELETE CASCADE
 );
 
 CREATE TRIGGER set_timestamp

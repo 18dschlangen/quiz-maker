@@ -157,8 +157,40 @@ app.post("/api/quizzes", async (req, res) => {
         );
       }
     }
-
     res.json("success");
+  } catch (e) {
+    res.json({ error: "There was an error: " + e });
+  }
+});
+
+app.get("/api/quizzes", async (req, res) => {
+  try {
+    const quizNameData = await client.query("SELECT name FROM quizzes;");
+    res.json(quizNameData.rows);
+  } catch (e) {
+    res.json({ error: "There was an error: " + e });
+  }
+});
+
+app.get("/api/quizzes/:name", async (req, res) => {
+  try {
+    const quizNameData = await client.query(
+      "SELECT * FROM quizzes WHERE name=$1;",
+      [req.params.name]
+    );
+    res.json(quizNameData.rows);
+  } catch (e) {
+    res.json({ error: "There was an error: " + e });
+  }
+});
+
+app.delete("/api/quizzes/:name", async (req, res) => {
+  try {
+    const quizNameData = await client.query(
+      "DELETE FROM quizzes WHERE name=$1;",
+      [req.params.name]
+    );
+    res.json({ success: true });
   } catch (e) {
     res.json({ error: "There was an error: " + e });
   }

@@ -38,6 +38,10 @@ export default function CreateQuiz() {
       });
       const data = await response.json();
       console.log("data :>> ", data);
+      if (data.error)
+        alert(
+          "There is already a quiz with that name. Please choose a new name."
+        );
     } catch (e) {
       console.log("e", e);
     }
