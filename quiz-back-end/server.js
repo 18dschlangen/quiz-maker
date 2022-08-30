@@ -178,7 +178,23 @@ app.get("/api/quizzes/:name", async (req, res) => {
       "SELECT * FROM quizzes WHERE name=$1;",
       [req.params.name]
     );
-    res.json(quizNameData.rows);
+    const questionData = await client.query(
+      "SELECT * FROM questions WHERE quiz_id=$1;",
+      [quizNameData.rows[0].id]
+    );
+    const questions = [];
+    for (let i = 0; i < questionData.rows.length; i++) {
+      const wrongAnswerData = await client.query(
+        "SELECT * FROM wrong_answers WHERE question_id=$1;",
+        [questionData.rows[i].id]
+      );
+      questions.push({
+        question: questionData.rows[i],
+        wrongAnswers: wrongAnswerData.rows,
+      });
+    }
+
+    res.json({ quiz: quizNameData.rows[0], questions });
   } catch (e) {
     res.json({ error: "There was an error: " + e });
   }
