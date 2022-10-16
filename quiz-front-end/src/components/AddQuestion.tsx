@@ -1,5 +1,5 @@
 import React from "react";
-import { Question } from "../pages/CreateQuiz";
+import { Question } from "./EditCreateQuiz";
 interface AddQuestionProps {
   question: Question;
   setQuestions: React.Dispatch<React.SetStateAction<Question[]>>;

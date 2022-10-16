@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import AddQuestion from "../components/AddQuestion";
 import EditCreateQuiz, { Question } from "../components/EditCreateQuiz";
 
 export default function CreateQuiz() {

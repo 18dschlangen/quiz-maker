@@ -165,18 +165,18 @@ app.post("/api/quizzes", async (req, res) => {
 
 app.get("/api/quizzes", async (req, res) => {
   try {
-    const quizNameData = await client.query("SELECT name FROM quizzes;");
+    const quizNameData = await client.query("SELECT * FROM quizzes;");
     res.json(quizNameData.rows);
   } catch (e) {
     res.json({ error: "There was an error: " + e });
   }
 });
 
-app.get("/api/quizzes/:name", async (req, res) => {
+app.get("/api/quizzes/:id", async (req, res) => {
   try {
     const quizNameData = await client.query(
-      "SELECT * FROM quizzes WHERE name=$1;",
-      [req.params.name]
+      "SELECT * FROM quizzes WHERE id=$1;",
+      [req.params.id]
     );
     const questionData = await client.query(
       "SELECT * FROM questions WHERE quiz_id=$1;",

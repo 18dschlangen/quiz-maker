@@ -10,6 +10,7 @@ import Quizzes from "./pages/Quizzes";
 import RandomQuestions from "./pages/RandomQuestions";
 import Quiz from "./pages/Quiz";
 import EditQuiz from "./pages/EditQuiz";
+import TakeQuiz from "./pages/TakeQuiz";
 
 function App() {
   return (
@@ -21,8 +22,9 @@ function App() {
         <Route path="quizzes" element={<Quizzes />} />
         <Route path="random-questions" element={<RandomQuestions />} />
         <Route path="create-quiz" element={<CreateQuiz />} />
-        <Route path="quizzes/:name" element={<Quiz />} />
-        <Route path="quizzes/:name/edit" element={<EditQuiz />} />
+        <Route path="quizzes/:id" element={<Quiz />} />
+        <Route path="quizzes/:id/edit" element={<EditQuiz />} />
+        <Route path="quizzes/:id/take-quiz" element={<TakeQuiz />} />
       </Routes>
     </div>
   );
